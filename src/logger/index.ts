@@ -1,7 +1,11 @@
-const winston = require('winston');
-const config = require('../config');
+import morgan from 'morgan';
+import winston from 'winston';
 
-const logger = winston.createLogger({
+import config from '../config';
+
+export const middleware = morgan(':date[web] [IP :req[X-Forwarded-For]] :method :url :status :response-time[3]ms');
+
+export const logger = winston.createLogger({
   level: config.logging.level,
   format: winston.format.combine(
     winston.format.timestamp({
@@ -20,6 +24,3 @@ const logger = winston.createLogger({
     }),
   ],
 });
-
-logger.level = config.logging.level;
-module.exports = logger;
